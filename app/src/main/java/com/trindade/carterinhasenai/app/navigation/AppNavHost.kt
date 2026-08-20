@@ -1,37 +1,55 @@
 package com.trindade.carterinhasenai.app.navigation
 
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.navigation.NavHostController
+
 import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.rememberNavController
-import com.trindade.carterinhasenai.feature.auth.navigation.authScreen
-import com.trindade.carterinhasenai.feature.carteirinha.navigation.carteirinhaScreen
-import com.trindade.carterinhasenai.feature.home.navigation.homeScreen
-import com.trindade.carterinhasenai.feature.unidadecurricular.navigation.componentesScreen
+import androidx.navigation.compose.composable
+import com.trindade.carterinhasenai.feature.carteirinha.presentation.screen.CarteirinhaScreen
+import com.trindade.carterinhasenai.feature.home_aluno.presentation.screen.HomeScreen
+import com.trindade.carterinhasenai.feature.login.presentation.screen.LoginScreen
+import com.trindade.carterinhasenai.feature.unidadecurriculares.presentation.screen.UnidadeCurricularScreen
 
 @Composable
-fun AppNavHost() {
-    val navController = rememberNavController()
-
+fun AppNavHost(
+    navController: NavHostController
+) {
     NavHost(
         navController = navController,
-        startDestination = Routes.Login
+        startDestination = Routes.Login.route
     ) {
-        authScreen {
-            navController.navigate(Routes.Home)
+        composable(Routes.Login.route) {
+            LoginScreen(
+                onLoginSucesso = {
+                    navController.navigate(Routes.HomeAluno.route)
+                }
+            )
         }
-
-        homeScreen(
-            onNavigateToCarteirinha = {
-                navController.navigate(Routes.Carteirinha)
-            },
-            onNavigateToComponentes = {
-                navController.navigate(Routes.Componentes)
+        composable(Routes.Carteirinha.route) {
+            Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
+                CarteirinhaScreen(
+                    modifier = Modifier.padding(innerPadding)
+                )
             }
-        )
-
-        carteirinhaScreen()
-
-        componentesScreen()
-
+        }
+        composable(Routes.HomeAluno.route) {
+            Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
+                HomeScreen(
+                    navController = navController,
+                    modifier = Modifier.padding(innerPadding)
+                )
+            }
+        }
+        composable(Routes.UCAluno.route) {
+            Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
+                UnidadeCurricularScreen(
+                    modifier = Modifier.padding(innerPadding)
+                )
+            }
+        }
     }
 }

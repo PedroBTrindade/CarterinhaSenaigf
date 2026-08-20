@@ -1,12 +1,16 @@
 package com.trindade.carterinhasenai.app
 
 import androidx.compose.runtime.Composable
-import com.example.compose.CarterinhaSenaiTheme
+import androidx.navigation.compose.rememberNavController
 import com.trindade.carterinhasenai.app.navigation.AppNavHost
+import com.trindade.carterinhasenai.core.designsystem.theme.CarterinhaSenaiTheme
 
 @Composable
-fun App(){
+fun App() {
     CarterinhaSenaiTheme() {
-        AppNavHost()
+        val navController = rememberNavController()
+        AppNavHost(
+            navController = navController,
+        )
     }
 }

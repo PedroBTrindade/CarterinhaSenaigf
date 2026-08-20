@@ -1,9 +1,16 @@
 package com.trindade.carterinhasenai.app.navigation
 
-object Routes {
-    const val Login = "login"
-    const val Home = "home"
-    const val Carteirinha = "carteirinha"
+import kotlinx.serialization.Serializable
 
-    const val Componentes = "componentes"
+sealed class Routes (val route: String){
+
+    @Serializable
+    data object Login : Routes("login")
+    @Serializable
+    data object Carteirinha : Routes("carteirinha")
+    @Serializable
+    data object HomeAluno : Routes("homeAluno")
+    @Serializable
+    data object UCAluno : Routes("ucAluno")
+
 }
